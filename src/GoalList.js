@@ -17,6 +17,7 @@ const GoalList = (props) => {
   return (
     <div>
       {goals.map((goal) => {
+        console.log(goal);
         return (
           <div>
             <Goal

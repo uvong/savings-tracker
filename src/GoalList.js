@@ -23,6 +23,7 @@ const GoalList = (props) => {
               key={goal.id}
               id={goal.id}
               name={goal.name}
+              totalAmount = {goal.totalAmount}
               goalReached={goal.goalReached}
               goalCreated={goal.goalCreated}
             />

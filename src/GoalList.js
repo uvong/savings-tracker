@@ -23,14 +23,10 @@ const GoalList = (props) => {
               key={goal.id}
               id={goal.id}
               name={goal.name}
-              totalAmount = {goal.totalAmount}
-              goalReached={goal.goalReached}
-              goalCreated={goal.goalCreated}
+              totalAmount={goal.totalAmount}
+              isReached={goal.isReached}
+              dateCreated={goal.dateCreated}
             />
-            {/* <h1> Name: {goal.name} </h1>
-            <h1> Total Amount: ${goal.totalAmount}</h1>
-            <h1> Goal reached: {String(goal.goalReached)} </h1>
-            <div> Date created: {String(goal.goalCreated.toDate())} </div> */}
           </div>
         );
       })}

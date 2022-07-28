@@ -14,18 +14,9 @@ import GoalForm from "./GoalForm";
 function App() {
   const goalsCollectionRef = collection(db, "goals");
 
-  const [goals, setGoals] = useState([]);
-
-    const getGoals = async () => {
-      const data = await getDocs(goalsCollectionRef);
-      setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getGoals();
-
   const deleteGoal = async (id) => {
     const goalDoc = doc(db, "goals", id);
     await deleteDoc(goalDoc);
-    getGoals();
   };
   return (
     <div className="App">
@@ -33,8 +24,6 @@ function App() {
       <GoalList
         goalsCollectionRef={goalsCollectionRef}
         deleteGoal={deleteGoal}
-        getGoals = {getGoals}
-        goals = {goals}
       />
     </div>
   );

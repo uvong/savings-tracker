@@ -27,6 +27,7 @@ const GoalList = (props) => {
               totalAmount={goal.totalAmount}
               isReached={goal.isReached}
               dateCreated={goal.dateCreated}
+              deleteGoal={props.deleteGoal}
             />
           </div>
         );

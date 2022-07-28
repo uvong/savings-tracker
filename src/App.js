@@ -16,11 +16,11 @@ function App() {
 
   const [goals, setGoals] = useState([]);
 
-  const getGoals = async () => {
-    const data = await getDocs(goalsCollectionRef);
-    setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  };
-  getGoals();
+    const getGoals = async () => {
+      const data = await getDocs(goalsCollectionRef);
+      setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getGoals();
 
   const deleteGoal = async (id) => {
     const goalDoc = doc(db, "goals", id);

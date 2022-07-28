@@ -16,11 +16,21 @@ function App() {
 
   const [goals, setGoals] = useState([]);
 
-  const getGoals = async () => {
-    const data = await getDocs(goalsCollectionRef);
+  const getGoals = () => {
+    const data = getDocs(goalsCollectionRef);
     setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
-  getGoals();
+  useEffect(getGoals, []);
+
+  const createGoal = async (goalInfo) => {
+    await addDoc(goalsCollectionRef, {
+      name: goalInfo.name,
+      totalAmount: Number(goalInfo.totalAmount),
+      dateCreated: new Date(),
+      isReached: false,
+    });
+    getGoals();
+  };
 
   const deleteGoal = async (id) => {
     const goalDoc = doc(db, "goals", id);
@@ -29,13 +39,11 @@ function App() {
   };
   return (
     <div className="App">
-      <GoalForm goalsCollectionRef={goalsCollectionRef} />
-      <GoalList
+      <GoalForm
         goalsCollectionRef={goalsCollectionRef}
-        deleteGoal={deleteGoal}
-        getGoals = {getGoals}
-        goals = {goals}
+        createGoal={createGoal}
       />
+      <GoalList deleteGoal={deleteGoal} getGoals={getGoals} goals={goals} />
     </div>
   );
 }

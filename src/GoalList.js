@@ -4,19 +4,19 @@ import { getDocs } from "firebase/firestore";
 import Goal from "./Goal";
 
 const GoalList = (props) => {
-  const goalsCollectionRef = props.goalsCollectionRef;
-  const [goals, setGoals] = useState([]);
+  // const goalsCollectionRef = props.goalsCollectionRef;
+  // const [goals, setGoals] = useState([]);
 
-  useEffect(() => {
-    const getGoals = async () => {
-      const data = await getDocs(goalsCollectionRef);
-      setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-    getGoals();
-  }, []);
+  // useEffect(() => {
+  //   const getGoals = async () => {
+  //     const data = await getDocs(goalsCollectionRef);
+  //     setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   };
+  //   getGoals();
+  // }, []);
   return (
     <div>
-      {goals.map((goal) => {
+      {props.goals.map((goal) => {
         console.log(goal);
         return (
           <div>

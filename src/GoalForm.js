@@ -13,13 +13,13 @@ function GoalForm(props) {
       dateCreated: new Date(),
       isReached: false,
     });
+    props.getGoals();
   };
   return (
     <div>
       <input
         placeholder="Goal Name"
         onChange={(event) => {
-          console.log(event.target.value);
           setNewName(event.target.value);
         }}
       />
@@ -29,7 +29,6 @@ function GoalForm(props) {
         placeholder="Total Amount $"
         onChange={(event) => {
           setNewTotalAmount(event.target.value);
-          console.log(typeof event.target.value); //why is this a str lol
         }}
       />
       <button onClick={createGoal}> Create Goal</button>

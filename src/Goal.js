@@ -1,5 +1,6 @@
 import React from "react";
 import DepositForm from "./DepositForm";
+import "./Goal.css";
 
 function Goal(props) {
   const dateCreated = props.dateCreated.toDate();
@@ -7,12 +8,12 @@ function Goal(props) {
   const depositsRef = props.getDepositsRef(props.id);
 
   return (
-    <div>
-      <h1>
-        <button onClick={getDeposits}>{props.name}</button>
-      </h1>
-      <h1> Total Amount: ${props.totalAmount}</h1>
-      <h1> Goal reached: {String(props.isReached)} </h1>
+    <div className="Goal-item">
+      <button className="Name-button" onClick={getDeposits}>
+        {props.name}
+      </button>
+      <div>Total Amount: ${props.totalAmount}</div>
+      <div> Goal reached: {String(props.isReached)} </div>
       <div> Date created: {dateCreated.toDateString()} </div>
       <button onClick={() => props.deleteGoal(props.id)}> Delete </button>
       <DepositForm

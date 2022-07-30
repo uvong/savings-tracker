@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { db } from "./firebase-config";
-import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { collection, getDocs, doc, deleteDoc, addDoc } from "firebase/firestore";
 import GoalList from "./GoalList";
 import GoalForm from "./GoalForm";
 import DepositList from "./DepositList";
+import DepositForm from "./DepositForm";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
 
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
+  const [newDeposit, setNewDeposit] = useState(0);
 
   const getGoals = async () => {
     const data = await getDocs(goalsCollectionRef);
@@ -24,6 +26,13 @@ function App() {
     setDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
+  const createDeposit = async (goalID) => {
+    const depositsRef = collection(db, "goals", goalID, "deposits");
+    await addDoc(depositsRef, {
+      amount: Number(newDeposit),
+      depositDate: new Date(),
+    });
+  };
   useEffect(() => {
     getGoals();
   }, []);
@@ -36,12 +45,16 @@ function App() {
 
   return (
     <div className="App">
-      <GoalForm goalsCollectionRef={goalsCollectionRef} getGoals={getGoals} />
+      <GoalForm getGoals={getGoals} />
       <GoalList
         goals={goals}
         deleteGoal={deleteGoal}
         getDeposits={getDeposits}
       />
+      {/* <DepositForm createDeposit ={createDeposit}/> */}
+
+      <DepositForm createDeposit = {createDeposit}/>
+
       <DepositList deposits={deposits} />
     </div>
   );

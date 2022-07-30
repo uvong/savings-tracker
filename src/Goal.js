@@ -1,4 +1,5 @@
 import React from "react";
+import DepositForm from "./DepositForm";
 
 function Goal(props) {
   const dateCreated = props.dateCreated.toDate();
@@ -13,6 +14,7 @@ function Goal(props) {
       <h1> Goal reached: {String(props.isReached)} </h1>
       <div> Date created: {dateCreated.toDateString()} </div>
       <button onClick={() => props.deleteGoal(props.id)}> Delete </button>
+      <DepositForm/>
     </div>
   );
 }

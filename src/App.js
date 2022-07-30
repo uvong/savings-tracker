@@ -25,7 +25,6 @@ function App() {
   };
 
   const getDepositsRef = (goalID) => {
-    console.log("hello");
     const depositsRef = collection(db, "goals", goalID, "deposits");
     return depositsRef;
   };
@@ -42,14 +41,26 @@ function App() {
 
   return (
     <div className="App">
-      <GoalForm goalsCollectionRef={goalsCollectionRef} getGoals={getGoals} />
-      <GoalList
-        goals={goals}
-        deleteGoal={deleteGoal}
-        getDeposits={getDeposits}
-        getDepositsRef={getDepositsRef}
-      />
-      <DepositList deposits={deposits} />
+      <div className="App-wrapper">
+        <header className="App-header">Savings Tracker</header>
+        <div className="Main">
+          <div className="Goal-list">
+            <GoalList
+              goals={goals}
+              deleteGoal={deleteGoal}
+              getDeposits={getDeposits}
+              getDepositsRef={getDepositsRef}
+            />
+            <GoalForm
+              goalsCollectionRef={goalsCollectionRef}
+              getGoals={getGoals}
+            />
+          </div>
+          <div className="Deposits">
+            <DepositList deposits={deposits} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

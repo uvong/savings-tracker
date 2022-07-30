@@ -1,0 +1,10 @@
+.Name-button {
+  font-size: 30px;
+  border: none;
+  background-color: transparent;  
+}
+
+.Name-button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}

@@ -1,45 +1,27 @@
 import React from "react";
+import { addDoc } from "firebase/firestore";
 import { useState } from "react";
-import { addDoc, collectiom } from "firebase/firestore";
 
-function DepositForm(props) {
-  const defaultDeposit = {
-    amount: 0
-  }
-  console.log(props);
-  const [newDeposit, setNewDeposit] = useState(defaultDeposit);
+const DepositForm = (props) => {
+  const [newAmount, setNewAmount] = useState(0);
 
-  const onFormChange = (event) => {
-    const stateName = event.target.name;
-    const inputValue = event.target.value;
-
-    const newDepositData = { ...newDeposit };
-    newDepositData[stateName] = inputValue;
-
-    setNewDeposit(newDepositData);
+  const createDeposit = async () => {
+    await addDoc(props.depositsRef, {
+      amount: Number(newAmount),
+      depositDate: new Date(),
+    });
+    props.getDeposits(props.id);
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    props.createDeposit(newDeposit);
-    setNewDeposit(defaultDeposit);
-  };
-
-  
   return (
     <div>
-      <form onSubmit={handleSubmit} >
-        <label htmlFor="amount"></label>
-        <input
-          type="number"
-          name="amount"
-          placeholder="Enter an amount to deposit"
-          value={newDeposit.message}
-          onChange={onFormChange}
-        />
-        <div>{newDeposit.messageError}</div>
-        <input type="submit" value="Click to deposit" />
-      </form>
+      <input
+        type="number"
+        placeholder="Amount $"
+        onChange={(event) => {
+          setNewAmount(event.target.value);
+        }}
+      />
+      <button onClick={createDeposit}> Create Deposit</button>
     </div>
   );
 };

@@ -26,13 +26,12 @@ function App() {
     setDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  const createDeposit = async (goalID) => {
+  const getDepositsRef = (goalID) => {
+    console.log("hello");
     const depositsRef = collection(db, "goals", goalID, "deposits");
-    await addDoc(depositsRef, {
-      amount: Number(newDeposit),
-      depositDate: new Date(),
-    });
+    return depositsRef;
   };
+
   useEffect(() => {
     getGoals();
   }, []);
@@ -50,10 +49,8 @@ function App() {
         goals={goals}
         deleteGoal={deleteGoal}
         getDeposits={getDeposits}
+        getDepositsRef={getDepositsRef}
       />
-      {/* <DepositForm createDeposit ={createDeposit}/> */}
-
-      <DepositForm createDeposit = {createDeposit}/>
 
       <DepositList deposits={deposits} />
     </div>

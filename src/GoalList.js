@@ -16,6 +16,7 @@ const GoalList = (props) => {
               dateCreated={goal.dateCreated}
               deleteGoal={props.deleteGoal}
               getDeposits={props.getDeposits}
+              getDepositsRef={props.getDepositsRef}
             />
           </div>
         );

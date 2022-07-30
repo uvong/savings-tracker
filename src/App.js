@@ -24,6 +24,12 @@ function App() {
     setDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
+  const getDepositsRef = (goalID) => {
+    console.log("hello");
+    const depositsRef = collection(db, "goals", goalID, "deposits");
+    return depositsRef;
+  };
+
   useEffect(() => {
     getGoals();
   }, []);
@@ -41,6 +47,7 @@ function App() {
         goals={goals}
         deleteGoal={deleteGoal}
         getDeposits={getDeposits}
+        getDepositsRef={getDepositsRef}
       />
       <DepositList deposits={deposits} />
     </div>

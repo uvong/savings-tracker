@@ -3,31 +3,35 @@ import Deposit from "./Deposit";
 
 function DepositList(props) {
   const sumDepositAmount = (deposits) => {
-    //map to sum amount, not sure if here or in App.js
-    //expected output: 19
-    let sumTotal = 0;
+    let sumTotal = 0; // function that returns s
     for (const deposit of deposits) {
       sumTotal += deposit.amount;
     }
     return sumTotal;
   };
+  const depositsComponents = () => {
+    let depositAmount = 0; 
+    const eachComponent = props.deposits.map((deposit) => {
+      depositAmount += deposit.amount;
+      return ( //legit returning for loop after each iteration
+        <div>
+          <Deposit
+            key={deposit.id}
+            id={deposit.id}
+            amount={deposit.amount}
+            depositDate={deposit.depositDate}
+            depositAmount={depositAmount}
+          />
+        </div>
+      );
+    });
+    return eachComponent;
+  };
 
   return (
     <div>
-      <h1>Current Sum: {sumDepositAmount(props.deposits)} </h1>
-      {props.deposits.map((deposit) => {
-        return (
-          <div>
-            <Deposit
-              key={deposit.id}
-              id={deposit.id}
-              amount={deposit.amount}
-              depositDate={deposit.depositDate}
-              sumTotal = {sumDepositAmount(props.deposits)}
-            />
-          </div>
-        );
-      })}
+      <h1>Current Sum: ${sumDepositAmount(props.deposits)} </h1>
+      {depositsComponents()}
     </div>
   );
 }

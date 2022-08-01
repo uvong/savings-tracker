@@ -8,7 +8,7 @@ function Deposit(props) {
     <div>
       <h1>Amount: ${props.amount}</h1>
       <div>Deposit Date: {depositDate.toDateString()}</div>
-
+      <div> Sum: ${props.depositAmount}</div> 
     </div>
   );
 }

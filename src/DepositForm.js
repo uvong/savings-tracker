@@ -14,16 +14,15 @@ const DepositForm = (props) => {
     props.getDeposits(props.id);
   };
 
-  // // const validateDepositAmount = () => {
-  //   if (props.totalAmount <  amount) {
-      //console.log("amount too large")
-      // can have a red textbox here or make submit button unable to click
-  //   }
-  // }
+  const validateDepositAmount = (newAmount) => {
+    if (props.totalAmount > newAmount) {
+      console.log("amount too large");
 
-  // const sumDepositAmount = () => {
-  //   map to sum amount, not sure if here or in App.js
-  // }
+      //can have a red textbox here or make submit button unable to click
+    }
+  };
+  validateDepositAmount(newAmount);
+
   return (
     <div>
       <input

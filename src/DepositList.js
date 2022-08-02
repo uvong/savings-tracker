@@ -10,10 +10,11 @@ function DepositList(props) {
     return sumTotal;
   };
   const depositsComponents = () => {
-    let depositAmount = 0; 
+    let depositAmount = 0;
     const eachComponent = props.deposits.map((deposit) => {
       depositAmount += deposit.amount;
-      return ( //legit returning for loop after each iteration
+      return (
+        //legit returning for loop after each iteration
         <div>
           <Deposit
             key={deposit.id}
@@ -21,6 +22,7 @@ function DepositList(props) {
             amount={deposit.amount}
             depositDate={deposit.depositDate}
             depositAmount={depositAmount}
+            goalID={props.goalID}
           />
         </div>
       );

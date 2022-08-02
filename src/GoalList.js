@@ -18,6 +18,7 @@ const GoalList = (props) => {
               deleteGoal={props.deleteGoal}
               getDeposits={props.getDeposits}
               getDepositsRef={props.getDepositsRef}
+              getCurrentGoal={props.getCurrentGoal}
             />
           </div>
         );

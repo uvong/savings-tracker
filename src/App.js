@@ -1,22 +1,37 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import { db } from "./firebase-config";
-import { collection, getDocs, doc, deleteDoc, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import GoalList from "./GoalList";
 import GoalForm from "./GoalForm";
 import DepositList from "./DepositList";
-import DepositForm from "./DepositForm";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
 
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
-  const [newDeposit, setNewDeposit] = useState(0);
+  const [currentGoal, setCurrentGoal] = useState("current goal");
 
   const getGoals = async () => {
     const data = await getDocs(goalsCollectionRef);
     setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
+  useEffect(() => {
+    getGoals();
+  }, []);
+
+  const deleteGoal = async (id) => {
+    const goalDoc = doc(db, "goals", id);
+    await deleteDoc(goalDoc);
+    getGoals();
   };
 
   const getDeposits = async (goalID) => {
@@ -31,14 +46,12 @@ function App() {
     return depositsRef;
   };
 
-  useEffect(() => {
-    getGoals();
-  }, []);
-
-  const deleteGoal = async (id) => {
-    const goalDoc = doc(db, "goals", id);
-    await deleteDoc(goalDoc);
-    getGoals();
+  const getCurrentGoal = (goalID) => {
+    const currentGoalRef = doc(db, "goals", goalID);
+    // db path goals/<goalID>
+    getDoc(currentGoalRef).then((doc) => {
+      setCurrentGoal(doc.data(), doc.id);
+    });
   };
 
   return (
@@ -52,11 +65,15 @@ function App() {
               deleteGoal={deleteGoal}
               getDeposits={getDeposits}
               getDepositsRef={getDepositsRef}
+              getCurrentGoal={getCurrentGoal}
             />
             <GoalForm
               goalsCollectionRef={goalsCollectionRef}
               getGoals={getGoals}
             />
+          </div>
+          <div>
+            <h1>{currentGoal.name}</h1>
           </div>
           <div className="Deposits">
             <DepositList deposits={deposits} />

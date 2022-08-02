@@ -1,7 +1,6 @@
 import React from "react";
 import { addDoc } from "firebase/firestore";
 import { useState } from "react";
-import App from "./App";
 
 const DepositForm = (props) => {
   const [newAmount, setNewAmount] = useState(0);
@@ -14,14 +13,14 @@ const DepositForm = (props) => {
     props.getDeposits(props.id);
   };
 
-  const validateDepositAmount = (newAmount) => {
-    if (props.totalAmount > newAmount) {
-      console.log("amount too large");
+  // const validateDepositAmount = (newAmount) => {
+  //   if (props.totalAmount > newAmount) {
+  //     console.log("amount too large");
 
-      //can have a red textbox here or make submit button unable to click
-    }
-  };
-  validateDepositAmount(newAmount);
+  //     //can have a red textbox here or make submit button unable to click
+  //   }
+  // };
+  // validateDepositAmount(newAmount);
 
   return (
     <div>

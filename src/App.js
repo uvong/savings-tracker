@@ -17,7 +17,7 @@ function App() {
 
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
-  const [currentGoal, setCurrentGoal] = useState("current goal");
+  const [currentGoal, setCurrentGoal] = useState([]);
 
   const getGoals = async () => {
     const data = await getDocs(goalsCollectionRef);
@@ -50,8 +50,15 @@ function App() {
     const currentGoalRef = doc(db, "goals", goalID);
     // db path goals/<goalID>
     getDoc(currentGoalRef).then((doc) => {
-      setCurrentGoal(doc.data(), doc.id);
+      const currentGoal = { ...doc.data(), id: doc.id };
+      setCurrentGoal(currentGoal);
     });
+  };
+
+  const deleteDeposit = (depositID) => {
+    const depositDoc = doc(db, "goals", currentGoal.id, "deposits", depositID);
+    deleteDoc(depositDoc);
+    getDeposits(currentGoal.id);
   };
 
   return (
@@ -76,7 +83,7 @@ function App() {
             <h1>{currentGoal.name}</h1>
           </div>
           <div className="Deposits">
-            <DepositList deposits={deposits} />
+            <DepositList deposits={deposits} deleteDeposit={deleteDeposit} />
           </div>
         </div>
       </div>

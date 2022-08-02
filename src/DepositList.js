@@ -22,7 +22,7 @@ function DepositList(props) {
             amount={deposit.amount}
             depositDate={deposit.depositDate}
             depositAmount={depositAmount}
-            goalID={props.goalID}
+            deleteDeposit={props.deleteDeposit}
           />
         </div>
       );

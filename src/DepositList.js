@@ -14,7 +14,6 @@ function DepositList(props) {
     const eachComponent = props.deposits.map((deposit) => {
       depositAmount += deposit.amount;
       return (
-        //legit returning for loop after each iteration
         <div>
           <Deposit
             key={deposit.id}

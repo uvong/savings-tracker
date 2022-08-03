@@ -23,7 +23,6 @@ function GoalForm(props) {
 
     const newFormData = { ...formData };
     newFormData[stateName] = inputValue;
-
     setFormData(newFormData);
   };
 
@@ -46,6 +45,8 @@ function GoalForm(props) {
 
     if (!formData.totalAmount) {
       totalAmountError = "Amount can't be blank";
+    } else if (Number(formData.totalAmount) <= 0) {
+      totalAmountError = "Amount must be greater than 0";
     }
 
     if (nameError || totalAmountError) {

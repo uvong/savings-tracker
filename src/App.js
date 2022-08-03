@@ -5,6 +5,7 @@ import {
   collection,
   getDocs,
   getDoc,
+  addDoc,
   doc,
   deleteDoc,
 } from "firebase/firestore";
@@ -27,6 +28,11 @@ function App() {
   useEffect(() => {
     getGoals();
   }, []);
+
+  const addGoal = async (goalInfo) => {
+    await addDoc(goalsCollectionRef, goalInfo);
+    getGoals();
+  };
 
   const deleteGoal = async (id) => {
     const goalDoc = doc(db, "goals", id);
@@ -77,6 +83,7 @@ function App() {
             <GoalForm
               goalsCollectionRef={goalsCollectionRef}
               getGoals={getGoals}
+              addGoal={addGoal}
             />
           </div>
           <div>

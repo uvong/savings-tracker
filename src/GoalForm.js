@@ -6,12 +6,16 @@ const defaultGoal = {
   totalAmount: "",
   dateCreated: new Date(),
   isReached: false,
+};
+
+const defaultErrorMessages = {
   nameError: "",
   totalAmountError: "",
 };
 
 function GoalForm(props) {
   const [formData, setFormData] = useState(defaultGoal);
+  const [errorMessages, setErrorMessages] = useState(defaultErrorMessages);
 
   const onFormChange = (event) => {
     const stateName = event.target.name;
@@ -45,7 +49,7 @@ function GoalForm(props) {
     }
 
     if (nameError || totalAmountError) {
-      setFormData({ nameError, totalAmountError });
+      setErrorMessages({ nameError, totalAmountError });
       return false;
     }
 
@@ -63,7 +67,7 @@ function GoalForm(props) {
           value={formData.name}
           onChange={onFormChange}
         />
-        <div>{formData.nameError}</div>
+        <div>{errorMessages.nameError}</div>
         <label htmlFor="totalAmount"></label>
         <input
           type="number"
@@ -72,7 +76,7 @@ function GoalForm(props) {
           value={formData.totalAmount}
           onChange={onFormChange}
         />
-        <div>{formData.totalAmountError}</div>
+        <div>{errorMessages.totalAmountError}</div>
         <input type="submit" value="Add Goal" />
       </form>
     </div>

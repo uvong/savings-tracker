@@ -31,7 +31,7 @@ function DepositList(props) {
 
   return (
     <div>
-      <h1>Current Sum: ${sumDepositAmount(props.deposits)} </h1>
+      <h2>Current Sum: ${sumDepositAmount(props.deposits)} </h2>
       {depositsComponents()}
     </div>
   );

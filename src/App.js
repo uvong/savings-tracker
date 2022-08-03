@@ -86,11 +86,14 @@ function App() {
               addGoal={addGoal}
             />
           </div>
-          <div>
-            <h1>{currentGoal.name}</h1>
-          </div>
-          <div className="Deposits">
-            <DepositList deposits={deposits} deleteDeposit={deleteDeposit} />
+          <div className="Current-goal">
+            <div>
+              <h1>{currentGoal.name}</h1>
+              <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
+            </div>
+            <div className="Deposits">
+              <DepositList deposits={deposits} deleteDeposit={deleteDeposit} />
+            </div>
           </div>
         </div>
       </div>

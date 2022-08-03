@@ -4,7 +4,7 @@ import { useState } from "react";
 
 const DepositForm = (props) => {
   const [newAmount, setNewAmount] = useState(0);
-
+  
   const createDeposit = async () => {
     await addDoc(props.depositsRef, {
       amount: Number(newAmount),

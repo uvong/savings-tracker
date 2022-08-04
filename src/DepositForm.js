@@ -8,7 +8,13 @@ const DepositForm = (props) => {
     depositDate: new Date(),
   };
 
+  const defaultErrorMessages = {
+    messageError: "",
+  };
+
   const [formData, setFormData] = useState(defaultDeposit);
+  const [errorMessages, setErrorMessages] = useState(defaultErrorMessages);
+
 
   const onFormChange = (event) => {
     const stateName = event.target.name;
@@ -25,19 +31,17 @@ const DepositForm = (props) => {
     const isValid = validate();
     if (isValid) {
       props.addDeposit(formData);
-      console.log("in handlesubmit function");
       setFormData(defaultDeposit);
       props.getDeposits(props.id);
     }
   };
 
-  let errorMsg = "";
   const validate = () => {
     let messageError = "";
-    
     if (formData.amount > props.totalAmount) {
       messageError = "Deposit cannot be greater than Goal Amount";
-      errorMsg = messageError
+      setErrorMessages({ messageError});
+      // setDisableGoal(true);
       return false;
     }
     return true;
@@ -54,7 +58,7 @@ const DepositForm = (props) => {
           value={formData.amount}
           onChange={onFormChange}
         />
-        <div>{errorMsg}</div>
+        <div>{errorMessages.messageError}</div>
         <input type="submit" value="Add Deposit" />
       </form>
     </div>

@@ -16,8 +16,6 @@ const defaultErrorMessages = {
 function GoalForm(props) {
   const [formData, setFormData] = useState(defaultGoal);
   const [errorMessages, setErrorMessages] = useState(defaultErrorMessages);
-  //const [disableGoal, setDisableGoal] = useState(true);
-  // trying to disable button but deosn't seem to be working properly
 
   const onFormChange = (event) => {
     const stateName = event.target.name;
@@ -43,7 +41,6 @@ function GoalForm(props) {
 
     if (!formData.name) {
       nameError = "Goal Name can't be blank";
-      // setDisableGoal(true);
     }
 
     if (!formData.totalAmount) {
@@ -54,10 +51,8 @@ function GoalForm(props) {
 
     if (nameError || totalAmountError) {
       setErrorMessages({ nameError, totalAmountError });
-      // setDisableGoal(true);
       return false;
     }
-    // setDisableGoal(false);
     return true;
   };
 

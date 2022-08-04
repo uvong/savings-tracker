@@ -2,13 +2,7 @@ import React from "react";
 import Deposit from "./Deposit";
 
 function DepositList(props) {
-  const sumDepositAmount = (deposits) => {
-    let sumTotal = 0; // function that returns s
-    for (const deposit of deposits) {
-      sumTotal += deposit.amount;
-    }
-    return sumTotal;
-  };
+
   const depositsComponents = () => {
     let depositAmount = 0;
     const eachComponent = props.deposits.map((deposit) => {
@@ -31,8 +25,8 @@ function DepositList(props) {
 
   return (
     <div>
-      <h2>Current Sum: ${sumDepositAmount(props.deposits)} </h2>
-      {depositsComponents()}
+      <h1>Current Sum: ${props.sumDepositAmount(props.deposits)} </h1>
+      <p>{depositsComponents()} </p>
     </div>
   );
 }

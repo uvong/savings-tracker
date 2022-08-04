@@ -12,6 +12,7 @@ import {
 import GoalList from "./GoalList";
 import GoalForm from "./GoalForm";
 import DepositList from "./DepositList";
+import ProgressBar from "./ProgressBar";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
@@ -73,6 +74,14 @@ function App() {
     getDeposits(currentGoal.id);
   };
 
+  const sumDepositAmount = (deposits) => {
+    let sumTotal = 0;
+    for (const deposit of deposits) {
+      sumTotal += deposit.amount;
+    }
+    return sumTotal;
+  };
+
   return (
     <div className="App">
       <div className="App-wrapper">
@@ -99,9 +108,19 @@ function App() {
               <h1>{currentGoal.name}</h1>
               <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
             </div>
+
             <div className="Deposits">
-              <DepositList deposits={deposits} deleteDeposit={deleteDeposit} />
+              <DepositList
+                deposits={deposits}
+                deleteDeposit={deleteDeposit}
+                sumDepositAmount={sumDepositAmount}
+              />
             </div>
+
+            <ProgressBar
+              value={sumDepositAmount(deposits)}
+              max={currentGoal.totalAmount}
+            />
           </div>
         </div>
       </div>

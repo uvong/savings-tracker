@@ -67,6 +67,13 @@ function App() {
     getDeposits(currentGoal.id);
   };
 
+  const addDeposit = (depositID) => {
+    console.log("in add depoist");
+    const depositDoc = doc(db, "goals", currentGoal.id, "deposits", depositID);
+    addDoc(depositDoc);
+    getDeposits(currentGoal.id);
+  };
+
   return (
     <div className="App">
       <div className="App-wrapper">
@@ -79,6 +86,8 @@ function App() {
               getDeposits={getDeposits}
               getDepositsRef={getDepositsRef}
               getCurrentGoal={getCurrentGoal}
+              addDeposit={addDeposit}
+              //totalAmount = {currentGoal.totalAmount}
             />
             <GoalForm
               goalsCollectionRef={goalsCollectionRef}

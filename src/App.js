@@ -67,10 +67,9 @@ function App() {
     getDeposits(currentGoal.id);
   };
 
-  const addDeposit = (depositID) => {
-    console.log("in add depoist");
-    const depositDoc = doc(db, "goals", currentGoal.id, "deposits", depositID);
-    addDoc(depositDoc);
+  const addDeposit = (depositInfo) => {
+    const depositDocRef = collection(db, "goals", currentGoal.id, "deposits");
+    addDoc(depositDocRef, depositInfo);
     getDeposits(currentGoal.id);
   };
 

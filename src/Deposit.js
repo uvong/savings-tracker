@@ -1,4 +1,5 @@
 import React from "react";
+import "./Deposit.css";
 
 function Deposit(props) {
   const depositDate = props.depositDate.toDate();
@@ -7,9 +8,9 @@ function Deposit(props) {
   };
 
   return (
-    <div>
-      <h1>Amount: ${props.amount}</h1>
-      <div>Deposit Date: {depositDate.toDateString()}</div>
+    <div className="Deposit-item">
+      <div>${props.amount}</div>
+      <div>{depositDate.toLocaleDateString()}</div>
       <div> Sum: ${props.depositAmount}</div>
       <button onClick={deleteDeposit}>Delete Deposit</button>
     </div>

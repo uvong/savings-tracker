@@ -15,16 +15,19 @@ function Goal(props) {
       <button className="Name-button" onClick={handleClick}>
         {props.name}
       </button>
-      <div>Total Amount: ${props.totalAmount}</div>
-      <div> Goal reached: {String(props.isReached)} </div>
-      <div> Date created: {dateCreated.toDateString()} </div>
-      <button onClick={() => props.deleteGoal(props.id)}> Delete </button>
+      {/* <div>Total Amount: ${props.totalAmount}</div> */}
+      {/* <div> Goal reached: {String(props.isReached)} </div> */}
+      {/* <div> Date created: {dateCreated.toDateString()} </div> */}
+      <button id="Delete-button" onClick={() => props.deleteGoal(props.id)}>
+        {" "}
+        Delete{" "}
+      </button>
       <DepositForm
         depositsRef={depositsRef}
         getDeposits={props.getDeposits}
         id={props.id}
         totalAmount={props.totalAmount}
-        addDeposit = {props.addDeposit}
+        addDeposit={props.addDeposit}
       />
     </div>
   );

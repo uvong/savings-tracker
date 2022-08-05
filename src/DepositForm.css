@@ -1,0 +1,15 @@
+.Deposit-form {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#amount {
+    width: 50%;
+}
+
+#Error-msg {
+    width: 100%;
+    margin-left: 10px;
+    color: maroon;
+}

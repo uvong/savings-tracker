@@ -1,5 +1,6 @@
 import React from "react";
 import Goal from "./Goal";
+import "./GoalList";
 
 const GoalList = (props) => {
   return (
@@ -7,21 +8,19 @@ const GoalList = (props) => {
       <h2>SAVINGS GOALS</h2>
       {props.goals.map((goal) => {
         return (
-          <div>
-            <Goal
-              key={goal.id}
-              id={goal.id}
-              name={goal.name}
-              totalAmount={goal.totalAmount}
-              isReached={goal.isReached}
-              dateCreated={goal.dateCreated}
-              deleteGoal={props.deleteGoal}
-              getDeposits={props.getDeposits}
-              getDepositsRef={props.getDepositsRef}
-              getCurrentGoal={props.getCurrentGoal}
-              addDeposit = {props.addDeposit}
-            />
-          </div>
+          <Goal
+            key={goal.id}
+            id={goal.id}
+            name={goal.name}
+            totalAmount={goal.totalAmount}
+            isReached={goal.isReached}
+            dateCreated={goal.dateCreated}
+            deleteGoal={props.deleteGoal}
+            getDeposits={props.getDeposits}
+            getDepositsRef={props.getDepositsRef}
+            getCurrentGoal={props.getCurrentGoal}
+            addDeposit={props.addDeposit}
+          />
         );
       })}
     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import "./DepositForm.css";
 
 const DepositForm = (props) => {
   const defaultDeposit = {
@@ -55,17 +56,18 @@ const DepositForm = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="Deposit-form" onSubmit={handleSubmit}>
         <label htmlFor="amount"></label>
         <input
+          id="amount"
           type="number"
           name="amount"
           placeholder="Amount $"
           value={formData.amount}
           onChange={onFormChange}
         />
-        <div>{errorMessages.messageError}</div>
         <input type="submit" value="Add Deposit" />
+        <div id="Error-msg">{errorMessages.messageError}</div>
       </form>
     </div>
   );

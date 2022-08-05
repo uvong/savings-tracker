@@ -58,7 +58,9 @@ function App() {
     // db path goals/<goalID>
     getDoc(currentGoalRef).then((doc) => {
       const currentGoal = { ...doc.data(), id: doc.id };
+      currentGoal.dateCreated = currentGoal.dateCreated.toDate().toDateString();
       setCurrentGoal(currentGoal);
+      console.log(currentGoal.dateCreated);
     });
   };
 
@@ -106,21 +108,21 @@ function App() {
           <div className="Current-goal">
             <div>
               <h1>{currentGoal.name}</h1>
+              <ProgressBar
+                value={sumDepositAmount(deposits)}
+                max={currentGoal.totalAmount}
+              />
               <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
+              <div>Created on: {currentGoal.dateCreated}</div>
             </div>
 
-            <div className="Deposits">
+            <div>
               <DepositList
                 deposits={deposits}
                 deleteDeposit={deleteDeposit}
                 sumDepositAmount={sumDepositAmount}
               />
             </div>
-
-            <ProgressBar
-              value={sumDepositAmount(deposits)}
-              max={currentGoal.totalAmount}
-            />
           </div>
         </div>
       </div>

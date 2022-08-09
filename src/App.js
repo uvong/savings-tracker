@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { db } from "./firebase-config";
+import { db, auth } from "./firebase-config";
 import {
   collection,
   getDocs,
@@ -9,17 +9,28 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import GoalList from "./GoalList";
 import GoalForm from "./GoalForm";
 import DepositList from "./DepositList";
 import ProgressBar from "./ProgressBar";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
+  const navigate = useNavigate();
 
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [currentGoal, setCurrentGoal] = useState([]);
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     const uid = user.uid;
+  //     console.log(`user ${uid} is signed in`);
+  //   } else {
+  //     console.log("user is not signed in");
+  //   }
+  // });
 
   const getGoals = async () => {
     const data = await getDocs(goalsCollectionRef);
@@ -84,10 +95,18 @@ function App() {
     return sumTotal;
   };
 
+  const logout = async () => {
+    await signOut(auth);
+    navigate("login");
+  };
+
   return (
     <div className="App">
       <div className="App-wrapper">
         <header className="App-header">Savings Tracker</header>
+        <nav>
+          <button onClick={logout}>Logout</button>
+        </nav>
         <div className="Main">
           <div className="Goal-list">
             <GoalList

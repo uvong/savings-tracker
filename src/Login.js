@@ -1,26 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase-config";
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Form, Card, Button } from "react-bootstrap";
+import { Container, Form, Card, Button, Alert } from "react-bootstrap";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [user]);
 
   const login = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.log(error.message);
+    } catch {
+      setError("Incorrect Email/Password");
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     login();
-    navigate("/");
   };
 
   return (
@@ -32,6 +38,7 @@ function Login() {
         <Card>
           <Card.Body>
             <h1 className="text-center mb-4">Login</h1>
+            {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group>
                 <Form.Label>Email</Form.Label>
@@ -53,7 +60,7 @@ function Login() {
                   }}
                 />
               </Form.Group>
-              <Button className="w-100 " type="submit">
+              <Button className="w-100 mt-2" type="submit">
                 Login
               </Button>
             </Form>

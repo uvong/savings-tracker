@@ -9,7 +9,7 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
 import GoalForm from "./GoalForm";
 import DepositList from "./DepositList";
@@ -23,14 +23,7 @@ function App() {
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [currentGoal, setCurrentGoal] = useState([]);
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     const uid = user.uid;
-  //     console.log(`user ${uid} is signed in`);
-  //   } else {
-  //     console.log("user is not signed in");
-  //   }
-  // });
+  const user = auth.currentUser;
 
   const getGoals = async () => {
     const data = await getDocs(goalsCollectionRef);
@@ -38,6 +31,9 @@ function App() {
   };
 
   useEffect(() => {
+    if (!user) {
+      navigate("login");
+    }
     getGoals();
   }, []);
 
@@ -106,6 +102,7 @@ function App() {
         <header className="App-header">Savings Tracker</header>
         <nav>
           <button onClick={logout}>Logout</button>
+          <div>Current user ID: {user?.uid}</div>
         </nav>
         <div className="Main">
           <div className="Goal-list">

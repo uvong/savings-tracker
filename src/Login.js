@@ -19,6 +19,9 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    //have condiitonal where if login is successful then
+    //can call nav function. 
+    //else say the password is incorrect 
     login();
     navigate("/");
   };

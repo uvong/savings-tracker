@@ -5,7 +5,6 @@ const ProgressBar = (props) => {
 
   const findPercentage = () => {
     let percentageFound = Math.round((value / max) * 100);
-    console.log(value, max);
     return percentageFound;
   };
   return (

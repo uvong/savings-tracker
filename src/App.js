@@ -113,6 +113,8 @@ function App() {
               getDepositsRef={getDepositsRef}
               getCurrentGoal={getCurrentGoal}
               addDeposit={addDeposit}
+              sumDepositAmount = {sumDepositAmount}
+              deposits = {deposits}
               //totalAmount = {currentGoal.totalAmount}
             />
             <GoalForm

@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Form, Card, Button, Alert } from "react-bootstrap";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Login() {
   const navigate = useNavigate();
@@ -26,9 +26,6 @@ function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //have condiitonal where if login is successful then
-    //can call nav function. 
-    //else say the password is incorrect 
     login();
   };
 

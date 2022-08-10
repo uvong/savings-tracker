@@ -27,7 +27,6 @@ const DepositForm = (props) => {
   };
 
   const handleSubmit = (event) => {
-    // console.log("in handle submit");
     event.preventDefault();
     const isValid = validate();
     if (isValid) {
@@ -37,17 +36,27 @@ const DepositForm = (props) => {
     }
   };
 
+  const findDifference = () => {
+    let difference = props.totalAmount - props.sumDepositAmount(props.deposits);
+    return difference;
+  };
+
   const validate = () => {
-    // console.log("in validate");
-    // console.log(formData);
     let messageError = "";
     if (formData.amount === "") {
-      messageError = "Input must be a number";
+      messageError = "Deposit must be a number";
       setErrorMessages({ messageError });
       return false;
     }
+
     if (formData.amount > props.totalAmount) {
       messageError = "Deposit cannot be greater than Goal Amount";
+      setErrorMessages({ messageError });
+      return false;
+    }
+
+    if (formData.amount > findDifference()) {
+      messageError = "This would exceed your goal amount, enter a smaller deposit";
       setErrorMessages({ messageError });
       return false;
     }

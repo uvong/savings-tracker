@@ -28,6 +28,8 @@ function Goal(props) {
         id={props.id}
         totalAmount={props.totalAmount}
         addDeposit={props.addDeposit}
+        sumDepositAmount = {props.sumDepositAmount}
+        deposits = {props.deposits}
       />
     </div>
   );

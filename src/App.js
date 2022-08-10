@@ -8,6 +8,8 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
@@ -28,7 +30,8 @@ function App() {
   const user = auth.currentUser;
 
   const getGoals = async () => {
-    const data = await getDocs(goalsCollectionRef);
+    const q = query(goalsCollectionRef, where("owner", "==", user.uid));
+    const data = await getDocs(q);
     setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 

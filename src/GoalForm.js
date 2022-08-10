@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 const defaultGoal = {
   name: "",
@@ -57,29 +58,37 @@ function GoalForm(props) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="d-flex flex-column">
+      <Form.Group className="ms-2">
+        <Form.Label className="w-100">Goal Name</Form.Label>
         <label htmlFor="name"></label>
         <input
           type="text"
           name="name"
-          placeholder="Goal Name"
           value={formData.name}
           onChange={onFormChange}
         />
         <div>{errorMessages.nameError}</div>
+      </Form.Group>
+      <Form.Group className="ms-2">
+        <Form.Label className="w-100">Goal Amount</Form.Label>
         <label htmlFor="totalAmount"></label>
         <input
           type="number"
           name="totalAmount"
-          placeholder="Goal Amount"
           value={formData.totalAmount}
           onChange={onFormChange}
         />
         <div>{errorMessages.totalAmountError}</div>
-        <input type="submit" value="Add Goal" />
-      </form>
-    </div>
+      </Form.Group>
+      <Button
+        type="submit"
+        variant="success"
+        className="my-2 w-50 align-self-center"
+      >
+        Add Goal
+      </Button>
+    </Form>
   );
 }
 

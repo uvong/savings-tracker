@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 import "./DepositForm.css";
 
 const DepositForm = (props) => {
@@ -56,7 +57,8 @@ const DepositForm = (props) => {
     }
 
     if (formData.amount > findDifference()) {
-      messageError = "This would exceed your goal amount, enter a smaller deposit";
+      messageError =
+        "This would exceed your goal amount, enter a smaller deposit";
       setErrorMessages({ messageError });
       return false;
     }
@@ -64,21 +66,27 @@ const DepositForm = (props) => {
   };
 
   return (
-    <div>
-      <form className="Deposit-form" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="d-flex flex-column">
+      <Form.Group className="m-2">
+        <Form.Label className="w-100">Deposit Amount</Form.Label>
         <label htmlFor="amount"></label>
         <input
           id="amount"
           type="number"
           name="amount"
-          placeholder="Amount $"
           value={formData.amount}
           onChange={onFormChange}
         />
-        <input type="submit" value="Add Deposit" />
         <div id="Error-msg">{errorMessages.messageError}</div>
-      </form>
-    </div>
+      </Form.Group>
+      <Button
+        variant="outline-success"
+        className="w-50 my-2 align-self-center"
+        type="submit"
+      >
+        Add Deposit
+      </Button>
+    </Form>
   );
 };
 

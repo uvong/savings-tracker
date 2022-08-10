@@ -11,10 +11,11 @@ import {
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
-import GoalForm from "./GoalForm";
 import DepositList from "./DepositList";
 import ProgressBar from "./ProgressBar";
 import { useNavigate } from "react-router-dom";
+import { Button, Container, Stack } from "react-bootstrap";
+import GoalModal from "./GoalModal";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
@@ -23,6 +24,7 @@ function App() {
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [currentGoal, setCurrentGoal] = useState([]);
+  const [showGoalModal, setShowGoalModal] = useState(false);
   const user = auth.currentUser;
 
   const getGoals = async () => {
@@ -98,52 +100,67 @@ function App() {
 
   return (
     <div className="App">
-      <div className="App-wrapper">
+      <Container className="my-4">
         <header className="App-header">Savings Tracker</header>
-        <nav>
-          <button onClick={logout}>Logout</button>
-          <div>Current user ID: {user?.uid}</div>
-        </nav>
-        <div className="Main">
-          <div className="Goal-list">
-            <GoalList
-              goals={goals}
-              deleteGoal={deleteGoal}
-              getDeposits={getDeposits}
-              getDepositsRef={getDepositsRef}
-              getCurrentGoal={getCurrentGoal}
-              addDeposit={addDeposit}
-              sumDepositAmount = {sumDepositAmount}
-              deposits = {deposits}
-              //totalAmount = {currentGoal.totalAmount}
-            />
-            <GoalForm
-              goalsCollectionRef={goalsCollectionRef}
-              getGoals={getGoals}
-              addGoal={addGoal}
-            />
-          </div>
-          <div className="Current-goal">
-            <div>
-              <h1>{currentGoal.name}</h1>
-              <ProgressBar
-                value={sumDepositAmount(deposits)}
-                max={currentGoal.totalAmount}
-              />
-              <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
-              <div>Created on: {currentGoal.dateCreated}</div>
-            </div>
-
-            <div>
-              <DepositList
-                deposits={deposits}
-                deleteDeposit={deleteDeposit}
+        <div>Current user ID: {user?.uid}</div>
+        <Stack direction="horizontal" gap="2" className="my-2">
+          <h1 className="me-auto">Savings Goals</h1>
+          <Button
+            size="sm"
+            variant="outline-dark"
+            onClick={() => {
+              setShowGoalModal(true);
+            }}
+          >
+            Add Goal
+          </Button>
+          <Button size="sm" variant="secondary" onClick={logout}>
+            Logout
+          </Button>
+        </Stack>
+        <div className="App-wrapper">
+          <div className="Main">
+            <div className="Goal-list">
+              <GoalList
+                goals={goals}
+                deleteGoal={deleteGoal}
+                getDeposits={getDeposits}
+                getDepositsRef={getDepositsRef}
+                getCurrentGoal={getCurrentGoal}
+                addDeposit={addDeposit}
                 sumDepositAmount={sumDepositAmount}
+                deposits={deposits}
               />
+              <GoalModal
+                show={showGoalModal}
+                handleClose={() => setShowGoalModal(false)}
+                addGoal={addGoal}
+                goalsCollectionRef={goalsCollectionRef}
+                getGoals={getGoals}
+              />
+            </div>
+            <div className="Current-goal">
+              <div>
+                <h1>{currentGoal.name}</h1>
+                <ProgressBar
+                  value={sumDepositAmount(deposits)}
+                  max={currentGoal.totalAmount}
+                />
+                <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
+                <div>Created on: {currentGoal.dateCreated}</div>
+              </div>
+
+              <div>
+                <DepositList
+                  deposits={deposits}
+                  deleteDeposit={deleteDeposit}
+                  sumDepositAmount={sumDepositAmount}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
 }

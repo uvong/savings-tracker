@@ -5,7 +5,6 @@ import "./GoalList";
 const GoalList = (props) => {
   return (
     <div>
-      <h2>SAVINGS GOALS</h2>
       {props.goals.map((goal) => {
         return (
           <Goal
@@ -20,8 +19,8 @@ const GoalList = (props) => {
             getDepositsRef={props.getDepositsRef}
             getCurrentGoal={props.getCurrentGoal}
             addDeposit={props.addDeposit}
-            sumDepositAmount = {props.sumDepositAmount}
-            deposits = {props.deposits}
+            sumDepositAmount={props.sumDepositAmount}
+            deposits={props.deposits}
           />
         );
       })}

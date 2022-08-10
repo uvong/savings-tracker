@@ -1,6 +1,5 @@
 import React from "react";
 import Deposit from "./Deposit";
-import "./DepositList.css";
 
 function DepositList(props) {
   const depositsComponents = () => {

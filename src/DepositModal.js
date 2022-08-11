@@ -10,13 +10,13 @@ function DepositModal(props) {
       </Modal.Header>
       <div className="body">
         <DepositForm
-          depositsRef={props.depositsRef}
-          getDeposits={props.getDeposits}
+          getAllDeposits={props.getAllDeposits}
           id={props.id}
           totalAmount={props.totalAmount}
           addDeposit={props.addDeposit}
           sumDepositAmount={props.sumDepositAmount}
           deposits={props.deposits}
+          // setCurrentDeposits={props.setCurrentDeposits}
         />
       </div>
     </Modal>

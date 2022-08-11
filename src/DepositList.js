@@ -20,12 +20,7 @@ function DepositList(props) {
     return eachComponent;
   };
 
-  return (
-    <div>
-      <div>Current Sum: ${props.sumDepositAmount(props.deposits)} </div>
-      <div className="Deposits-display">{depositsComponents()} </div>
-    </div>
-  );
+  return <div>{depositsComponents()}</div>;
 }
 
 export default DepositList;

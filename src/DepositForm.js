@@ -7,6 +7,7 @@ const DepositForm = (props) => {
   const defaultDeposit = {
     amount: "",
     depositDate: new Date(),
+    goalId: props.id,
   };
 
   const defaultErrorMessages = {
@@ -33,7 +34,7 @@ const DepositForm = (props) => {
     if (isValid) {
       props.addDeposit(formData);
       setFormData(defaultDeposit);
-      props.getDeposits(props.id);
+      props.getAllDeposits();
     }
   };
 

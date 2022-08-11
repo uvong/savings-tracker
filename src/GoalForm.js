@@ -1,20 +1,21 @@
 import React from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-
-const defaultGoal = {
-  name: "",
-  totalAmount: "",
-  dateCreated: new Date(),
-  isReached: false,
-};
+import { auth } from "./firebase-config";
 
 const defaultErrorMessages = {
   nameError: "",
   totalAmountError: "",
 };
-
 function GoalForm(props) {
+  const [user, setUser] = useState(auth.currentUser);
+  const defaultGoal = {
+    name: "",
+    totalAmount: "",
+    dateCreated: new Date(),
+    isReached: false,
+    owner: user.uid,
+  };
   const [formData, setFormData] = useState(defaultGoal);
   const [errorMessages, setErrorMessages] = useState(defaultErrorMessages);
 
@@ -59,6 +60,7 @@ function GoalForm(props) {
 
   return (
     <Form onSubmit={handleSubmit} className="d-flex flex-column">
+      <div>{user.uid}</div>
       <Form.Group className="ms-2">
         <Form.Label className="w-100">Goal Name</Form.Label>
         <label htmlFor="name"></label>

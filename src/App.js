@@ -86,6 +86,7 @@ function App() {
   };
 
   const sumDepositAmount = (deposits) => {
+    //console.log("in sum deposit amout function")
     let sumTotal = 0;
     for (const deposit of deposits) {
       sumTotal += deposit.amount;
@@ -130,6 +131,7 @@ function App() {
                 addDeposit={addDeposit}
                 sumDepositAmount={sumDepositAmount}
                 deposits={deposits}
+                currentGoal = {currentGoal}
               />
               <GoalModal
                 show={showGoalModal}

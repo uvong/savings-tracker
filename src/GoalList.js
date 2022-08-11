@@ -21,6 +21,7 @@ const GoalList = (props) => {
             addDeposit={props.addDeposit}
             sumDepositAmount={props.sumDepositAmount}
             deposits={props.deposits}
+            currentGoal = {props.currentGoal}
           />
         );
       })}

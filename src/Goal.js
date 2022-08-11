@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Card, Stack } from "react-bootstrap";
 import DepositModal from "./DepositModal";
+import ProgressBar from "./ProgressBar";
 
 function Goal(props) {
   const [showDepositModal, setShowDepositModal] = useState(false);
@@ -9,7 +10,8 @@ function Goal(props) {
     props.getDeposits(props.id);
     props.getCurrentGoal(props.id);
   };
-
+  console.log(props.sumDepositAmount(props.deposits))
+  console.log(props.currentGoal)
   return (
     <Card className="my-2">
       <DepositModal
@@ -25,9 +27,15 @@ function Goal(props) {
       />
       <Card.Body>
         <Card.Title className="d-flex justify-content-between mb-3 fw-normal">
-          <div>{props.name}</div>
+          <div>{props.name}</div> 
+          <div> {props.sumDepositAmount(props.deposits)}</div>
+          {/* <ProgressBar
+            value={props.sumDepositAmount(props.deposits)}
+            max={props.totalAmount}
+          /> */}
           <div>${props.totalAmount}</div>
         </Card.Title>
+
         <Stack direction="horizontal" gap="2" className="mt-4">
           <Button
             size="sm"

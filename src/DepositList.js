@@ -14,18 +14,14 @@ function DepositList(props) {
           depositDate={deposit.depositDate}
           depositAmount={depositAmount}
           deleteDeposit={props.deleteDeposit}
+          deposits = {props.deposits}
         />
       );
     });
     return eachComponent;
   };
 
-  return (
-    <div>
-      <div>Current Sum: ${props.sumDepositAmount(props.deposits)} </div>
-      <div className="Deposits-display">{depositsComponents()} </div>
-    </div>
-  );
+  return <div>{depositsComponents()}</div>;
 }
 
 export default DepositList;

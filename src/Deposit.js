@@ -5,6 +5,7 @@ function Deposit(props) {
   const depositDate = props.depositDate.toDate();
   const deleteDeposit = () => {
     props.deleteDeposit(props.id);
+    props.setCurrentDeposits(props.deposits)
   };
 
   return (

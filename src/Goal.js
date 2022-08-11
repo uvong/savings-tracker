@@ -1,41 +1,58 @@
 import React, { useState } from "react";
-import { Button, Card, Stack } from "react-bootstrap";
-import DepositModal from "./DepositModal";
-import ProgressBar from "./ProgressBar";
+import { Button, Card, ProgressBar, Stack } from "react-bootstrap";
+import DepositFormModal from "./DepositFormModal";
+import DepositListModal from "./DepositListModal";
 
 function Goal(props) {
-  const [showDepositModal, setShowDepositModal] = useState(false);
-  const depositsRef = props.getDepositsRef(props.id);
+  const [showDepositFormModal, setShowDepositFormModal] = useState(false);
+  const [showDepositListModal, setShowDepositListModal] = useState(false);
   const handleClick = () => {
-    props.getDeposits(props.id);
-    props.getCurrentGoal(props.id);
+    props.setCurrentDeposits(currentDeposits);
+    //props.getCurrentGoal(props.id);
+    setShowDepositListModal(true);
+    //setTrue();
   };
-  console.log(props.sumDepositAmount(props.deposits))
-  console.log(props.currentGoal)
+
+  // const setTrue = () => {
+  //   console.log("in settrue function");
+  //   setShowDepositListModal(true);
+  // };
+  const currentDeposits = props.getCurrentGoalDeposits(props.id);
+  const currentSum = props.sumDepositAmount(currentDeposits);
+
   return (
     <Card className="my-2">
-      <DepositModal
-        show={showDepositModal}
-        depositsRef={depositsRef}
-        getDeposits={props.getDeposits}
+      <DepositListModal
+        show={showDepositListModal}
+        handleClose={() => setShowDepositListModal(false)}
+        currentDeposits = {props.currentDeposits}
+        deleteDeposit = {props.deleteDeposit}
+        setCurrentDeposits= {props.setCurrentDeposits}
+
+      />
+      <DepositFormModal
+        show={showDepositFormModal}
+        getAllDeposits={props.getAllDeposits}
         id={props.id}
         totalAmount={props.totalAmount}
         addDeposit={props.addDeposit}
         sumDepositAmount={props.sumDepositAmount}
         deposits={props.deposits}
-        handleClose={() => setShowDepositModal(false)}
+        handleClose={() => setShowDepositFormModal(false)}
+        setCurrentDeposits={props.setCurrentDeposits}
       />
       <Card.Body>
         <Card.Title className="d-flex justify-content-between mb-3 fw-normal">
-          <div>{props.name}</div> 
-          <div> {props.sumDepositAmount(props.deposits)}</div>
-          {/* <ProgressBar
-            value={props.sumDepositAmount(props.deposits)}
-            max={props.totalAmount}
-          /> */}
-          <div>${props.totalAmount}</div>
+          <div>{props.name}</div>
+          <div>
+            ${currentSum} / ${props.totalAmount}
+          </div>
         </Card.Title>
-
+        <ProgressBar
+          className="rounded-pill"
+          max={props.totalAmount}
+          now={currentSum}
+        />
         <Stack direction="horizontal" gap="2" className="mt-4">
           <Button
             size="sm"
@@ -49,7 +66,7 @@ function Goal(props) {
             size="sm"
             variant="outline-success"
             onClick={() => {
-              setShowDepositModal(true);
+              setShowDepositFormModal(true);
             }}
           >
             Add Deposit

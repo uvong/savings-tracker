@@ -14,18 +14,19 @@ import {
 import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
 import DepositList from "./DepositList";
-import ProgressBar from "./ProgressBar";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Stack } from "react-bootstrap";
 import GoalModal from "./GoalModal";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
+  const depositsCollectionRef = collection(db, "deposits");
   const navigate = useNavigate();
 
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
-  const [currentGoal, setCurrentGoal] = useState([]);
+  const [currentDeposits, setCurrentDeposits] = useState([]);
+  // const [currentGoal, setCurrentGoal] = useState([]);
   const [showGoalModal, setShowGoalModal] = useState(false);
   const user = auth.currentUser;
 
@@ -40,6 +41,7 @@ function App() {
       navigate("login");
     }
     getGoals();
+    getAllDeposits();
   }, []);
 
   const addGoal = async (goalInfo) => {
@@ -53,39 +55,41 @@ function App() {
     getGoals();
   };
 
-  const getDeposits = async (goalID) => {
-    const depositsRef = collection(db, "goals", goalID, "deposits");
-    // db path: goals/<goalID>/deposits
+  const getAllDeposits = async () => {
+    const depositsRef = collection(db, "deposits");
     const data = await getDocs(depositsRef);
     setDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  const getDepositsRef = (goalID) => {
-    const depositsRef = collection(db, "goals", goalID, "deposits");
-    return depositsRef;
+  const getCurrentGoalDeposits = (goalId) => {
+    const updatedDeposits = [];
+    for (const deposit of deposits) {
+      if (deposit.goalId === goalId) {
+        updatedDeposits.push({ ...deposit });
+      }
+    }
+    return updatedDeposits;
   };
 
-  const getCurrentGoal = (goalID) => {
-    const currentGoalRef = doc(db, "goals", goalID);
-    // db path goals/<goalID>
-    getDoc(currentGoalRef).then((doc) => {
-      const currentGoal = { ...doc.data(), id: doc.id };
-      currentGoal.dateCreated = currentGoal.dateCreated.toDate().toDateString();
-      setCurrentGoal(currentGoal);
-      console.log(currentGoal.dateCreated);
-    });
-  };
+  // const getCurrentGoal = (goalID) => {
+  //   const currentGoalRef = doc(db, "goals", goalID);
+
+  //   getDoc(currentGoalRef).then((doc) => {
+  //     const currentGoal = { ...doc.data(), id: doc.id };
+  //     currentGoal.dateCreated = currentGoal.dateCreated.toDate().toDateString();
+  //     setCurrentGoal(currentGoal);
+  //     console.log(currentGoal.dateCreated);
+  //   });
+  // };
 
   const deleteDeposit = (depositID) => {
-    const depositDoc = doc(db, "goals", currentGoal.id, "deposits", depositID);
+    const depositDoc = doc(db, "deposits", depositID);
     deleteDoc(depositDoc);
-    getDeposits(currentGoal.id);
+    // getAllDeposits(currentGoal.id);
   };
 
   const addDeposit = (depositInfo) => {
-    const depositDocRef = collection(db, "goals", currentGoal.id, "deposits");
-    addDoc(depositDocRef, depositInfo);
-    getDeposits(currentGoal.id);
+    addDoc(depositsCollectionRef, depositInfo);
   };
 
   const sumDepositAmount = (deposits) => {
@@ -100,6 +104,11 @@ function App() {
   const logout = async () => {
     await signOut(auth);
     navigate("login");
+  };
+
+  const updateCurrentDeposits = (updatedDeposits) => {
+    setCurrentDeposits(updatedDeposits);
+
   };
 
   return (
@@ -122,49 +131,39 @@ function App() {
             Logout
           </Button>
         </Stack>
-        <div className="App-wrapper">
-          <div className="Main">
-            <div className="Goal-list">
-              <GoalList
-                goals={goals}
-                deleteGoal={deleteGoal}
-                getDeposits={getDeposits}
-                getDepositsRef={getDepositsRef}
-                getCurrentGoal={getCurrentGoal}
-                addDeposit={addDeposit}
-                sumDepositAmount={sumDepositAmount}
-                deposits={deposits}
-                currentGoal = {currentGoal}
-              />
-              <GoalModal
-                show={showGoalModal}
-                handleClose={() => setShowGoalModal(false)}
-                addGoal={addGoal}
-                goalsCollectionRef={goalsCollectionRef}
-                getGoals={getGoals}
-              />
-            </div>
-            <div className="Current-goal">
-              <div>
-                <h1>{currentGoal.name}</h1>
-                <ProgressBar
-                  value={sumDepositAmount(deposits)}
-                  max={currentGoal.totalAmount}
-                />
-                <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
-                <div>Created on: {currentGoal.dateCreated}</div>
-              </div>
 
-              <div>
-                <DepositList
-                  deposits={deposits}
-                  deleteDeposit={deleteDeposit}
-                  sumDepositAmount={sumDepositAmount}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <GoalList
+          goals={goals}
+          deleteGoal={deleteGoal}
+          getAllDeposits={getAllDeposits}
+          // getCurrentGoal={getCurrentGoal}
+          addDeposit={addDeposit}
+          sumDepositAmount={sumDepositAmount}
+          deposits={deposits}
+          getCurrentGoalDeposits={getCurrentGoalDeposits}
+          setCurrentDeposits={updateCurrentDeposits}
+          currentDeposits = {currentDeposits}
+          deleteDeposit = {deleteDeposit}
+        />
+        <GoalModal
+          show={showGoalModal}
+          handleClose={() => setShowGoalModal(false)}
+          addGoal={addGoal}
+          goalsCollectionRef={goalsCollectionRef}
+          getGoals={getGoals}
+        />
+
+        {/* <div>
+          <h1>{currentGoal.name}</h1>
+          <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
+          <div>Created on: {currentGoal.dateCreated}</div>
+        </div> */}
+{/* 
+        <DepositList
+          deposits={currentDeposits}
+          deleteDeposit={deleteDeposit}
+          sumDepositAmount={sumDepositAmount}
+        /> */}
       </Container>
     </div>
   );

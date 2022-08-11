@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import DepositForm from "./DepositForm";
 
-function DepositModal(props) {
+function DepositFormModal(props) {
   return (
     <Modal show={props.show} onHide={props.handleClose} centered>
       <Modal.Header closeButton>
@@ -10,17 +10,17 @@ function DepositModal(props) {
       </Modal.Header>
       <div className="body">
         <DepositForm
-          depositsRef={props.depositsRef}
-          getDeposits={props.getDeposits}
+          getAllDeposits={props.getAllDeposits}
           id={props.id}
           totalAmount={props.totalAmount}
           addDeposit={props.addDeposit}
           sumDepositAmount={props.sumDepositAmount}
           deposits={props.deposits}
+          // setCurrentDeposits={props.setCurrentDeposits}
         />
       </div>
     </Modal>
   );
 }
 
-export default DepositModal;
+export default DepositFormModal;

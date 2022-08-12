@@ -16,6 +16,7 @@ function DepositFormModal(props) {
           addDeposit={props.addDeposit}
           sumDepositAmount={props.sumDepositAmount}
           deposits={props.deposits}
+          currentDeposits={props.currentDeposits}
           // setCurrentDeposits={props.setCurrentDeposits}
         />
       </div>

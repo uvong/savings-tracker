@@ -1,35 +1,19 @@
 import React, { useState } from "react";
 import { Button, Card, ProgressBar, Stack } from "react-bootstrap";
 import DepositFormModal from "./DepositFormModal";
-import DepositListModal from "./DepositListModal";
 
 function Goal(props) {
   const [showDepositFormModal, setShowDepositFormModal] = useState(false);
-  const [showDepositListModal, setShowDepositListModal] = useState(false);
   const handleClick = () => {
     props.setCurrentDeposits(currentDeposits);
-    //props.getCurrentGoal(props.id);
-    setShowDepositListModal(true);
-    //setTrue();
+    props.showDepositListModal();
   };
 
-  // const setTrue = () => {
-  //   console.log("in settrue function");
-  //   setShowDepositListModal(true);
-  // };
   const currentDeposits = props.getCurrentGoalDeposits(props.id);
   const currentSum = props.sumDepositAmount(currentDeposits);
 
   return (
     <Card className="my-2">
-      <DepositListModal
-        show={showDepositListModal}
-        handleClose={() => setShowDepositListModal(false)}
-        currentDeposits = {props.currentDeposits}
-        deleteDeposit = {props.deleteDeposit}
-        setCurrentDeposits= {props.setCurrentDeposits}
-
-      />
       <DepositFormModal
         show={showDepositFormModal}
         getAllDeposits={props.getAllDeposits}
@@ -40,6 +24,7 @@ function Goal(props) {
         deposits={props.deposits}
         handleClose={() => setShowDepositFormModal(false)}
         setCurrentDeposits={props.setCurrentDeposits}
+        currentDeposits={props.currentDeposits}
       />
       <Card.Body>
         <Card.Title className="d-flex justify-content-between mb-3 fw-normal">

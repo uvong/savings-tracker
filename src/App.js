@@ -13,10 +13,10 @@ import {
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
-import DepositList from "./DepositList";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Stack } from "react-bootstrap";
 import GoalModal from "./GoalModal";
+import DepositListModal from "./DepositListModal";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
@@ -26,8 +26,8 @@ function App() {
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [currentDeposits, setCurrentDeposits] = useState([]);
-  // const [currentGoal, setCurrentGoal] = useState([]);
   const [showGoalModal, setShowGoalModal] = useState(false);
+  const [showDepositListModal, setShowDepositListModal] = useState(false);
   const user = auth.currentUser;
 
   const getGoals = async () => {
@@ -71,21 +71,9 @@ function App() {
     return updatedDeposits;
   };
 
-  // const getCurrentGoal = (goalID) => {
-  //   const currentGoalRef = doc(db, "goals", goalID);
-
-  //   getDoc(currentGoalRef).then((doc) => {
-  //     const currentGoal = { ...doc.data(), id: doc.id };
-  //     currentGoal.dateCreated = currentGoal.dateCreated.toDate().toDateString();
-  //     setCurrentGoal(currentGoal);
-  //     console.log(currentGoal.dateCreated);
-  //   });
-  // };
-
-  const deleteDeposit = (depositID) => {
+  const deleteDeposit = async (depositID) => {
     const depositDoc = doc(db, "deposits", depositID);
-    deleteDoc(depositDoc);
-    // getAllDeposits(currentGoal.id);
+    await deleteDoc(depositDoc);
   };
 
   const addDeposit = (depositInfo) => {
@@ -93,7 +81,6 @@ function App() {
   };
 
   const sumDepositAmount = (deposits) => {
-    //console.log("in sum deposit amout function")
     let sumTotal = 0;
     for (const deposit of deposits) {
       sumTotal += deposit.amount;
@@ -108,7 +95,6 @@ function App() {
 
   const updateCurrentDeposits = (updatedDeposits) => {
     setCurrentDeposits(updatedDeposits);
-
   };
 
   return (
@@ -136,14 +122,16 @@ function App() {
           goals={goals}
           deleteGoal={deleteGoal}
           getAllDeposits={getAllDeposits}
-          // getCurrentGoal={getCurrentGoal}
           addDeposit={addDeposit}
           sumDepositAmount={sumDepositAmount}
           deposits={deposits}
           getCurrentGoalDeposits={getCurrentGoalDeposits}
           setCurrentDeposits={updateCurrentDeposits}
-          currentDeposits = {currentDeposits}
-          deleteDeposit = {deleteDeposit}
+          currentDeposits={currentDeposits}
+          deleteDeposit={deleteDeposit}
+          showDepositListModal={() => {
+            setShowDepositListModal(true);
+          }}
         />
         <GoalModal
           show={showGoalModal}
@@ -152,18 +140,13 @@ function App() {
           goalsCollectionRef={goalsCollectionRef}
           getGoals={getGoals}
         />
-
-        {/* <div>
-          <h1>{currentGoal.name}</h1>
-          <h2>Goal Amount: ${currentGoal.totalAmount}</h2>
-          <div>Created on: {currentGoal.dateCreated}</div>
-        </div> */}
-{/* 
-        <DepositList
-          deposits={currentDeposits}
+        <DepositListModal
+          show={showDepositListModal}
+          handleClose={() => setShowDepositListModal(false)}
+          currentDeposits={currentDeposits}
           deleteDeposit={deleteDeposit}
-          sumDepositAmount={sumDepositAmount}
-        /> */}
+          setCurrentDeposits={setCurrentDeposits}
+        />
       </Container>
     </div>
   );

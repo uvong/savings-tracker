@@ -4,7 +4,7 @@ import Deposit from "./Deposit";
 function DepositList(props) {
   const depositsComponents = () => {
     let depositAmount = 0;
-    const eachComponent = props.deposits.map((deposit) => {
+    const eachComponent = props.currentDeposits.map((deposit) => {
       depositAmount += deposit.amount;
       return (
         <Deposit
@@ -14,7 +14,7 @@ function DepositList(props) {
           depositDate={deposit.depositDate}
           depositAmount={depositAmount}
           deleteDeposit={props.deleteDeposit}
-          deposits = {props.deposits}
+          deposits={props.deposits}
         />
       );
     });

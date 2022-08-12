@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 import { Modal } from "react-bootstrap";
-import DepositList from './DepositList';
+import DepositList from "./DepositList";
 
 function DepositListModal(props) {
   return (
@@ -11,15 +11,14 @@ function DepositListModal(props) {
       {/* <DepositList/> */}
       {/* <div> Deposit list</div> */}
       <DepositList
-        deposits = {props.currentDeposits}
-        deleteDeposit = {props.deleteDeposit}
-        setCurrentDeposits = {props.setCurrentDeposits}
+        currentDeposits={props.currentDeposits}
+        deleteDeposit={props.deleteDeposit}
+        setCurrentDeposits={props.setCurrentDeposits}
       />
       {/* <div> {props.currentDeposits}</div> */}
-      <div className="body">
-      </div>
-  </Modal>
-  )
+      <div className="body"></div>
+    </Modal>
+  );
 }
 
-export default DepositListModal
+export default DepositListModal;

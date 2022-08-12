@@ -22,8 +22,9 @@ const GoalList = (props) => {
             deposits={props.deposits}
             getCurrentGoalDeposits={props.getCurrentGoalDeposits}
             setCurrentDeposits={props.setCurrentDeposits}
-            currentDeposits = {props.currentDeposits}
-            deleteDeposit ={props.deleteDeposit}
+            currentDeposits={props.currentDeposits}
+            deleteDeposit={props.deleteDeposit}
+            showDepositListModal={props.showDepositListModal}
           />
         );
       })}

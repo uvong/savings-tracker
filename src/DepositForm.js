@@ -25,7 +25,6 @@ const DepositForm = (props) => {
     newFormData[stateName] = inputValue;
 
     setFormData(newFormData);
-    console.log(newFormData);
   };
 
   const handleSubmit = (event) => {
@@ -39,7 +38,8 @@ const DepositForm = (props) => {
   };
 
   const findDifference = () => {
-    let difference = props.totalAmount - props.sumDepositAmount(props.deposits);
+    let difference =
+      props.totalAmount - props.sumDepositAmount(props.currentDeposits);
     return difference;
   };
 

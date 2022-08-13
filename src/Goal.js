@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, ProgressBar, Stack } from "react-bootstrap";
 import DepositFormModal from "./DepositFormModal";
 
 function Goal(props) {
   const [showDepositFormModal, setShowDepositFormModal] = useState(false);
   const handleClick = () => {
-    props.setCurrentDeposits(currentDeposits);
+    props.getCurrentGoalDeposits(props.id);
     props.showDepositListModal();
+    props.setCurrentGoal(props.id);
   };
 
-  const currentDeposits = props.getCurrentGoalDeposits(props.id);
+  const fetchCurrentGoalDeposits = (goalId) => {
+    const updatedDeposits = [];
+    for (const deposit of props.deposits) {
+      if (deposit.goalId === goalId) {
+        updatedDeposits.push({ ...deposit });
+      }
+    }
+    return updatedDeposits;
+  };
+
+  useEffect(() => {});
+
+  const currentDeposits = fetchCurrentGoalDeposits(props.id);
+  // const currentDeposits = props.getCurrentGoalDeposits(props.id);
   const currentSum = props.sumDepositAmount(currentDeposits);
 
   return (
@@ -23,7 +37,6 @@ function Goal(props) {
         sumDepositAmount={props.sumDepositAmount}
         deposits={props.deposits}
         handleClose={() => setShowDepositFormModal(false)}
-        setCurrentDeposits={props.setCurrentDeposits}
         currentDeposits={props.currentDeposits}
       />
       <Card.Body>

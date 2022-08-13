@@ -60,7 +60,6 @@ function GoalForm(props) {
 
   return (
     <Form onSubmit={handleSubmit} className="d-flex flex-column">
-      <div>{user.uid}</div>
       <Form.Group className="ms-2">
         <Form.Label className="w-100">Goal Name</Form.Label>
         <label htmlFor="name"></label>

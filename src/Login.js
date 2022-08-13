@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Form, Card, Button, Alert } from "react-bootstrap";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Login() {
   const navigate = useNavigate();
@@ -37,7 +37,8 @@ function Login() {
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body>
-            <h1 className="text-center mb-4">Login</h1>
+            <h1 className="text-center">Welcome</h1>
+            <div className="text-center mb-4">Sign into your account</div>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               <Form.Group>

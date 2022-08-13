@@ -9,12 +9,15 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (loading) {
+      return;
+    }
     if (user) navigate("/");
-  }, [user]);
+  }, [user, loading]);
 
   const login = async () => {
     try {

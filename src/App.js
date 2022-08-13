@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Container, Stack } from "react-bootstrap";
 import GoalModal from "./GoalModal";
 import DepositListModal from "./DepositListModal";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
@@ -28,7 +29,7 @@ function App() {
   const [currentGoal, setCurrentGoal] = useState("");
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [showDepositListModal, setShowDepositListModal] = useState(false);
-  const user = auth.currentUser;
+  const [user, loading] = useAuthState(auth);
 
   const getGoals = async () => {
     const q = query(goalsCollectionRef, where("owner", "==", user.uid));
@@ -37,12 +38,13 @@ function App() {
   };
 
   useEffect(() => {
+    if (loading) return;
     if (!user) {
       navigate("login");
     }
     getGoals();
     getAllDeposits();
-  }, []);
+  }, [user, loading]);
 
   const addGoal = async (goalInfo) => {
     await addDoc(goalsCollectionRef, goalInfo);

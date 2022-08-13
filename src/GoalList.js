@@ -16,15 +16,14 @@ const GoalList = (props) => {
             dateCreated={goal.dateCreated}
             deleteGoal={props.deleteGoal}
             getAllDeposits={props.getAllDeposits}
-            getCurrentGoal={props.getCurrentGoal}
             addDeposit={props.addDeposit}
             sumDepositAmount={props.sumDepositAmount}
             deposits={props.deposits}
             getCurrentGoalDeposits={props.getCurrentGoalDeposits}
-            setCurrentDeposits={props.setCurrentDeposits}
             currentDeposits={props.currentDeposits}
             deleteDeposit={props.deleteDeposit}
             showDepositListModal={props.showDepositListModal}
+            setCurrentGoal={props.setCurrentGoal}
           />
         );
       })}

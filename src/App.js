@@ -4,7 +4,6 @@ import { db, auth } from "./firebase-config";
 import {
   collection,
   getDocs,
-  getDoc,
   addDoc,
   doc,
   deleteDoc,
@@ -17,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Container, Stack } from "react-bootstrap";
 import GoalModal from "./GoalModal";
 import DepositListModal from "./DepositListModal";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function App() {
   const goalsCollectionRef = collection(db, "goals");
@@ -26,9 +26,10 @@ function App() {
   const [goals, setGoals] = useState([]);
   const [deposits, setDeposits] = useState([]);
   const [currentDeposits, setCurrentDeposits] = useState([]);
+  const [currentGoal, setCurrentGoal] = useState("");
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [showDepositListModal, setShowDepositListModal] = useState(false);
-  const user = auth.currentUser;
+  const [user, loading] = useAuthState(auth);
 
   const getGoals = async () => {
     const q = query(goalsCollectionRef, where("owner", "==", user.uid));
@@ -43,12 +44,13 @@ function App() {
   // };
 
   useEffect(() => {
+    if (loading) return;
     if (!user) {
       navigate("login");
     }
     getGoals();
     getAllDeposits();
-  }, []);
+  }, [user, loading]);
 
   const addGoal = async (goalInfo) => {
     await addDoc(goalsCollectionRef, goalInfo);
@@ -67,26 +69,21 @@ function App() {
     setDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
-  const getCurrentGoalDeposits = (goalId) => {
-    const updatedDeposits = [];
-    for (const deposit of deposits) {
-      if (deposit.goalId === goalId) {
-        updatedDeposits.push({ ...deposit });
-      }
-    }
-    return updatedDeposits;
+  const getCurrentGoalDeposits = async (goalId) => {
+    const q = query(depositsCollectionRef, where("goalId", "==", goalId));
+    const data = await getDocs(q);
+    setCurrentDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
   const deleteDeposit = async (depositID) => {
     const depositDoc = doc(db, "deposits", depositID);
     await deleteDoc(depositDoc);
-    // getCurrentGoalDeposits(goalId);
-    // getDeposit(goalId);
-    //updateCurrentDeposits(getCurrentGoalDeposits(goalId));
+    getCurrentGoalDeposits(currentGoal);
+    getAllDeposits();
   };
 
-  const addDeposit = (depositInfo) => {
-    addDoc(depositsCollectionRef, depositInfo);
+  const addDeposit = async (depositInfo) => {
+    await addDoc(depositsCollectionRef, depositInfo);
   };
 
   const sumDepositAmount = (deposits) => {
@@ -100,10 +97,6 @@ function App() {
   const logout = async () => {
     await signOut(auth);
     navigate("login");
-  };
-
-  const updateCurrentDeposits = (updatedDeposits) => {
-    setCurrentDeposits(updatedDeposits);
   };
 
   return (
@@ -126,7 +119,6 @@ function App() {
             Logout
           </Button>
         </Stack>
-
         <GoalList
           goals={goals}
           deleteGoal={deleteGoal}
@@ -135,11 +127,13 @@ function App() {
           sumDepositAmount={sumDepositAmount}
           deposits={deposits}
           getCurrentGoalDeposits={getCurrentGoalDeposits}
-          setCurrentDeposits={updateCurrentDeposits}
           currentDeposits={currentDeposits}
           deleteDeposit={deleteDeposit}
           showDepositListModal={() => {
             setShowDepositListModal(true);
+          }}
+          setCurrentGoal={(goalId) => {
+            setCurrentGoal(goalId);
           }}
         />
         <GoalModal

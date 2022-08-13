@@ -8,7 +8,7 @@ const defaultErrorMessages = {
   totalAmountError: "",
 };
 function GoalForm(props) {
-  const [user, setUser] = useState(auth.currentUser);
+  const user = auth.currentUser;
   const defaultGoal = {
     name: "",
     totalAmount: "",
@@ -34,6 +34,7 @@ function GoalForm(props) {
     if (isValid) {
       props.addGoal(formData);
       setFormData(defaultGoal);
+      props.handleClose();
     }
   };
 
@@ -60,7 +61,6 @@ function GoalForm(props) {
 
   return (
     <Form onSubmit={handleSubmit} className="d-flex flex-column">
-      <div>{user.uid}</div>
       <Form.Group className="ms-2">
         <Form.Label className="w-100">Goal Name</Form.Label>
         <label htmlFor="name"></label>

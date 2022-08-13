@@ -19,6 +19,7 @@ function GoalModal({
           addGoal={addGoal}
           goalsCollectionRef={goalsCollectionRef}
           getGoals={getGoals}
+          handleClose={handleClose}
         />
       </div>
     </Modal>

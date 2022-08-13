@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Card, ProgressBar, Stack } from "react-bootstrap";
 import DepositFormModal from "./DepositFormModal";
 
@@ -20,10 +20,7 @@ function Goal(props) {
     return updatedDeposits;
   };
 
-  useEffect(() => {});
-
   const currentDeposits = fetchCurrentGoalDeposits(props.id);
-  // const currentDeposits = props.getCurrentGoalDeposits(props.id);
   const currentSum = props.sumDepositAmount(currentDeposits);
 
   return (

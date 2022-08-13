@@ -34,6 +34,7 @@ const DepositForm = (props) => {
       props.addDeposit(formData);
       setFormData(defaultDeposit);
       props.getAllDeposits();
+      props.handleClose();
     }
   };
 

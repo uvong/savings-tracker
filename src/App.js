@@ -36,6 +36,12 @@ function App() {
     setGoals(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };
 
+  // const getDeposit = async (goalId) => {
+  //   const q = query(depositsCollectionRef, where("goal", "==", goalId));
+  //   const data = await getDocs(q);
+  //   setCurrentDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  // };
+
   useEffect(() => {
     if (!user) {
       navigate("login");
@@ -74,6 +80,9 @@ function App() {
   const deleteDeposit = async (depositID) => {
     const depositDoc = doc(db, "deposits", depositID);
     await deleteDoc(depositDoc);
+    // getCurrentGoalDeposits(goalId);
+    // getDeposit(goalId);
+    //updateCurrentDeposits(getCurrentGoalDeposits(goalId));
   };
 
   const addDeposit = (depositInfo) => {

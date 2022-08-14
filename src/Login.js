@@ -4,7 +4,6 @@ import { auth } from "./firebase-config";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, Form, Card, Button, Alert } from "react-bootstrap";
 import { useAuthState } from "react-firebase-hooks/auth";
-import "./CustomBootstrap.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,6 +34,25 @@ function Login() {
 
   return (
     <>
+      <style type="text/css">
+        {`
+    .custom-btn {
+      background-color: #6610f2;
+      color: white;
+    }
+
+    .custom-btn:hover {
+      background-color: #520dc2;
+      color: white;
+  }
+
+  .custom-card {
+    background-color: #6610f2;
+    color: white;
+    font-size: large;
+}
+    `}
+      </style>
       <Container
         className="d-flex flex-column align-items-center justify-content-center"
         style={{ minHeight: "100vh", maxWidth: "400px" }}

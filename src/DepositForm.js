@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Alert } from "react-bootstrap";
 import "./DepositForm.css";
 
 const DepositForm = (props) => {
@@ -79,10 +79,18 @@ const DepositForm = (props) => {
           value={formData.amount}
           onChange={onFormChange}
         />
-        <div id="Error-msg">{errorMessages.messageError}</div>
+        {errorMessages.messageError && (
+          <Alert
+            className="mt-2 d-flex align-items-center"
+            style={{ height: "10px" }}
+            variant="danger"
+          >
+            {errorMessages.messageError}
+          </Alert>
+        )}
       </Form.Group>
       <Button
-        variant="outline-success"
+        variant="success"
         className="w-50 my-2 align-self-center"
         type="submit"
       >

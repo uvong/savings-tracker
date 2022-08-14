@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./CustomBootstrap.css";
 import { db, auth } from "./firebase-config";
 import {
   collection,
@@ -94,15 +93,23 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <>
+      <style type="text/css">
+        {`
+          .custom-card {
+          background-color: #6610f2;
+          color: white;
+          font-size: large;
+        }
+    `}
+      </style>
       <Container className="my-4" style={{ maxWidth: "500px" }}>
         <Card
           className="d-flex w-100 text-center justify-content-center fs-1 custom-card"
-          style={{ minHeight: "20vh", maxWidth: "500px" }}
+          style={{ minHeight: "150px", maxWidth: "500px" }}
         >
           Indigo
         </Card>
-        {/* <header className="App-header">Savings Tracker</header> */}
         <Stack direction="horizontal" gap="2" className="my-2">
           <h1 className="me-auto">Savings Goals</h1>
           <Button
@@ -150,7 +157,7 @@ function App() {
           setCurrentDeposits={setCurrentDeposits}
         />
       </Container>
-    </div>
+    </>
   );
 }
 

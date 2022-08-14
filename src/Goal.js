@@ -25,6 +25,14 @@ function Goal(props) {
 
   return (
     <>
+      <style type="text/css">
+        {`
+    .progress-bar {
+      background-color: #6610f2;
+      color: white;
+    }
+    `}
+      </style>
       <Card className="my-2">
         <DepositFormModal
           show={showDepositFormModal}

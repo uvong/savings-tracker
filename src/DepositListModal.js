@@ -13,7 +13,6 @@ function DepositListModal(props) {
         deleteDeposit={props.deleteDeposit}
         setCurrentDeposits={props.setCurrentDeposits}
       />
-      <div className="body"></div>
     </Modal>
   );
 }

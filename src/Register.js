@@ -80,7 +80,7 @@ function Register() {
                     }}
                   />
                 </Form.Group>
-                <Button className="w-100 custom-btn" type="submit">
+                <Button className="w-100 custom-btn rounded-pill mt-2" type="submit">
                   Signup
                 </Button>
               </Form>

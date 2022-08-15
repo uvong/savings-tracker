@@ -14,14 +14,12 @@ function GoalModal({
       <Modal.Header closeButton>
         <Modal.Title className="ms-auto">Create a new goal</Modal.Title>
       </Modal.Header>
-      <div className="body">
-        <GoalForm
-          addGoal={addGoal}
-          goalsCollectionRef={goalsCollectionRef}
-          getGoals={getGoals}
-          handleClose={handleClose}
-        />
-      </div>
+      <GoalForm
+        addGoal={addGoal}
+        goalsCollectionRef={goalsCollectionRef}
+        getGoals={getGoals}
+        handleClose={handleClose}
+      />
     </Modal>
   );
 }

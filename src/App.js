@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 import { db, auth } from "./firebase-config";
 import {
   collection,
@@ -13,7 +12,7 @@ import {
 import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Stack } from "react-bootstrap";
+import { Button, Container, Stack, Card } from "react-bootstrap";
 import GoalModal from "./GoalModal";
 import DepositListModal from "./DepositListModal";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -100,15 +99,28 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Container className="my-4">
-        <header className="App-header">Savings Tracker</header>
-        <div>Current user ID: {user?.uid}</div>
+    <>
+      <style type="text/css">
+        {`
+          .custom-card {
+          background-color: #6610f2;
+          color: white;
+          font-size: large;
+        }
+    `}
+      </style>
+      <Container className="my-4" style={{ maxWidth: "500px" }}>
+        <Card
+          className="d-flex w-100 text-center justify-content-center fs-1 custom-card"
+          style={{ minHeight: "150px", maxWidth: "500px" }}
+        >
+          Indigo
+        </Card>
         <Stack direction="horizontal" gap="2" className="my-2">
           <h1 className="me-auto">Savings Goals</h1>
           <Button
             size="sm"
-            variant="outline-dark"
+            variant="outline-success"
             onClick={() => {
               setShowGoalModal(true);
             }}
@@ -151,7 +163,7 @@ function App() {
           setCurrentDeposits={setCurrentDeposits}
         />
       </Container>
-    </div>
+    </>
   );
 }
 

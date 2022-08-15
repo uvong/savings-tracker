@@ -8,11 +8,11 @@ function Deposit(props) {
   };
 
   return (
-    <Card className="my-1">
+    <Card className="m-2">
       <Card.Title className="m-2">
         <div className="">${props.amount}</div>
       </Card.Title>
-      <Stack direction="horizontal" gap="3" className="m-2">
+      <Stack direction="horizontal" gap="4" className="m-2">
         <div>{depositDate.toLocaleDateString()}</div>
         <div> Sum: ${props.depositAmount}</div>
         <Button

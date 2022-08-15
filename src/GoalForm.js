@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { auth } from "./firebase-config";
+import "./GoalForm.css";
 
 const defaultErrorMessages = {
   nameError: "",
@@ -60,37 +61,57 @@ function GoalForm(props) {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="d-flex flex-column">
-      <Form.Group className="ms-2">
-        <Form.Label className="w-100">Goal Name</Form.Label>
-        <label htmlFor="name"></label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={onFormChange}
-        />
-        <div>{errorMessages.nameError}</div>
-      </Form.Group>
-      <Form.Group className="ms-2">
-        <Form.Label className="w-100">Goal Amount</Form.Label>
-        <label htmlFor="totalAmount"></label>
-        <input
-          type="number"
-          name="totalAmount"
-          value={formData.totalAmount}
-          onChange={onFormChange}
-        />
-        <div>{errorMessages.totalAmountError}</div>
-      </Form.Group>
-      <Button
-        type="submit"
-        variant="success"
-        className="my-2 w-50 align-self-center"
-      >
-        Add Goal
-      </Button>
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit} className="d-flex flex-column">
+        <Form.Group className="mx-2">
+          <Form.Label className="w-100">Goal Name</Form.Label>
+          <label htmlFor="name"></label>
+          <input
+            className="goalForm"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={onFormChange}
+          />
+          {errorMessages.nameError && (
+            <Alert
+              className="mt-2 d-flex align-items-center"
+              style={{ height: "10px" }}
+              variant="danger"
+            >
+              {errorMessages.nameError}
+            </Alert>
+          )}
+        </Form.Group>
+        <Form.Group className="mx-2">
+          <Form.Label className="w-100">Goal Amount</Form.Label>
+          <label htmlFor="totalAmount"></label>
+          <input
+            className="goalForm"
+            type="number"
+            name="totalAmount"
+            value={formData.totalAmount}
+            onChange={onFormChange}
+          />
+          {errorMessages.totalAmountError && (
+            <Alert
+              className="mt-2 d-flex align-items-center"
+              style={{ height: "10px" }}
+              variant="danger"
+            >
+              {errorMessages.totalAmountError}
+            </Alert>
+          )}
+        </Form.Group>
+        <Button
+          type="submit"
+          variant="success"
+          className="my-2 w-50 align-self-center"
+        >
+          Add Goal
+        </Button>
+      </Form>
+    </>
   );
 }
 

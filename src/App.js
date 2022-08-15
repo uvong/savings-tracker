@@ -8,6 +8,7 @@ import {
   deleteDoc,
   query,
   where,
+  orderBy,
 } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import GoalList from "./GoalList";
@@ -69,7 +70,7 @@ function App() {
   };
 
   const getCurrentGoalDeposits = async (goalId) => {
-    const q = query(depositsCollectionRef, where("goalId", "==", goalId));
+    const q = query(depositsCollectionRef, where("goalId", "==", goalId), orderBy("depositDate", "desc"));
     const data = await getDocs(q);
     setCurrentDeposits(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
   };

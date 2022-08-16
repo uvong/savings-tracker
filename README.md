@@ -1,6 +1,6 @@
 # Indigo
 
-Keep track of your short and long term savings goals by using our Indigo, a savings tracker web application! Our program has a progress bar for each goal. All you will need is the goal amount and you start making deposits.
+Keep track of your short and long term savings goals by using Indigo, a savings tracker web application! Our program has a progress bar for each goal. All you will need is the goal amount and you start making deposits.
 
 Indigo allows for multiple users to log-in and personalize their own financial goals. Invite your friends and family and try Indigo now!
 
